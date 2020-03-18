@@ -9,7 +9,7 @@ output: slidy_presentation
 
 <!-- output: -->
 <!--   md_document: -->
-<!--     variant: markdown_github -->
+<!--     variant: gfm -->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -91,8 +91,6 @@ Make sure your software is up to date.
 
 # Prereqisites
 
-## Prereqisite 2
-
 **Please read the following instructions closely before diving in.**
 
 Let's make sure you are able to install packages.
@@ -107,6 +105,8 @@ If you get an error, you'll need to work through the steps below. Otherwise, you
 
 *Installing packages can be a problem on any computer on which you do not have administrative privileges.*
 
+# Prereqisite 2 (Mac)
+
 - Mac: 
   1. Using Finder, create new folder under `/Users/brandon` (replacing `brandon` with your Mac login name) called `RPackages` (`/Users/brandon/RPackages`)
   2. In RStudio, run `install.packages("usethis")` from the interactive console (bottom left)
@@ -118,7 +118,9 @@ If you get an error, you'll need to work through the steps below. Otherwise, you
   6. In RStudio, run `Sys.getenv('R_LIBS_USER')`
   7. Check to see that the output matches the location you entered before (e.g., `/Users/brandon`)
 
-## Prereqisite 2
+# Prereqisite 2 (Windows)
+
+Windows users may want to read this before proceeding: [https://rpubs.com/tomhopper/windows_nonadmin_install](https://rpubs.com/tomhopper/windows_nonadmin_install)
 
 - Windows: 
   1. Using File Explorer, create a new folder on your hard drive (**not the network drive**) under your users folder (e.g., `C:/Users/username/R/RPackages`)

@@ -1,71 +1,69 @@
 <!-- output: slidy_presentation -->
 
-Really quick introduction to R and RStudio
-==========================================
+output: md\_document: variant: markdown\_github
+
+# Really quick introduction to R and RStudio
 
 No need to run R itself - use RStudio (requires R to be installed)
 
--   Top left: scripting window
-    -   90% of the work happens here
--   Bottom left: Console (+ Terminal & Jobs)
-    -   The interactive part of R
--   Top right: Environment & History
-    -   What’s in memory for the current session
--   Bottom right: Files, Plots, Packages, and Help.
-    -   Helpful tools and visuals
+  - Top left: scripting window
+      - 90% of the work happens here
+  - Bottom left: Console (+ Terminal & Jobs)
+      - The interactive part of R
+  - Top right: Environment & History
+      - What’s in memory for the current session
+  - Bottom right: Files, Plots, Packages, and Help.
+      - Helpful tools and visuals
 
-The extreme basics of R syntax
-==============================
+# The extreme basics of R syntax
 
 `object <- value`
 
--   The arrow assignment operator (`<-`) tells R to store what’s on the
+  - The arrow assignment operator (`<-`) tells R to store what’s on the
     right of the arrow in the object named on the left side of the
     arrow.
-    -   The object on the left can be given almost any name you choose,
+      - The object on the left can be given almost any name you choose,
         with several exceptions:
-        -   It can’t start with a number (e.g., `1stVariable` won’t
-            work - use `firstVariable` instead)
-        -   It can’t contain spaces (e.g., `first variable` won’t work -
+          - It can’t start with a number (e.g., `1stVariable` won’t work
+            - use `firstVariable` instead)
+          - It can’t contain spaces (e.g., `first variable` won’t work -
             use `first_variable` instead)
-        -   It can’t contain special characters other than an underscore
+          - It can’t contain special characters other than an underscore
             or a period.
-        -   You should avoid giving it a name that is already used by R
+          - You should avoid giving it a name that is already used by R
             (although this is technically allowed, it is not best
             practice)
-            -   e.g., `mean` is a function in R that is used to
+              - e.g., `mean` is a function in R that is used to
                 calculate the mean.
-                -   Therefore, you should avoid creating an object
+                  - Therefore, you should avoid creating an object
                     called `mean`.
-    -   The part on the right can be pretty much anything numeric (not
+      - The part on the right can be pretty much anything numeric (not
         quoted unless you don’t want it to be treated as a number) or
         text (all text must be surrounded by single or double quotation
         marks) or more complex things that we will eventually cover.
 
-R Objects
-=========
+# R Objects
 
 Once an object is created, it can be viewed or manipulated.
 
--   To see the contents of an object, just call the object’s name, or,
+  - To see the contents of an object, just call the object’s name, or,
     to be more explicit, ask its contents to be printed.
-    -   `object`
-    -   `print(object)`
--   An example of manipulating an object would be to perform some
+      - `object`
+      - `print(object)`
+  - An example of manipulating an object would be to perform some
     mathematical operation on the object.
-    -   `object + 1` (adds 1 to each element stored in `object`)
-    -   `sqrt(object)` (takes the square root of each element in
+      - `object + 1` (adds 1 to each element stored in `object`)
+      - `sqrt(object)` (takes the square root of each element in
         `object`)
-    -   `object^2` (squares the value of each element in `object`)
+      - `object^2` (squares the value of each element in `object`)
 
 The syntax `print(object)` and `sqrt(object)` both illustrate another
 feature of R: functions. We’ll cover these more later.
 
--   `print` and `sqrt` are the functions, and `object` is what is passed
+  - `print` and `sqrt` are the functions, and `object` is what is passed
     to the function.
 
-Interactive console (bottom left)
-=================================
+# Interactive console (bottom left)
 
 Try these 15 basic exercises. Type the following commands next to the
 `>` and then press Enter/Return. Make note of what happens.
@@ -88,22 +86,16 @@ a_message
 "I am purposefully leaving off the closing quotation marks and running this command anyway!
 ```
 
-Prereqisites
-============
+# Prereqisites
 
-Prereqisite 1
--------------
+## Prereqisite 1
 
 Make sure your software is up to date.
 
--   R <https://cran.r-project.org/>
--   RStudio <https://www.rstudio.com/products/rstudio/download/>
+  - R <https://cran.r-project.org/>
+  - RStudio <https://www.rstudio.com/products/rstudio/download/>
 
-Prereqisites
-============
-
-Prereqisite 2
--------------
+# Prereqisites
 
 **Please read the following instructions closely before diving in.**
 
@@ -121,7 +113,9 @@ Otherwise, you can ignore these steps.
 *Installing packages can be a problem on any computer on which you do
 not have administrative privileges.*
 
--   Mac:
+# Prereqisite 2 (Mac)
+
+  - Mac:
     1.  Using Finder, create new folder under `/Users/brandon`
         (replacing `brandon` with your Mac login name) called
         `RPackages` (`/Users/brandon/RPackages`)
@@ -129,22 +123,24 @@ not have administrative privileges.*
         interactive console (bottom left)
     3.  In RStudio, run `usethis::edit_r_environ()`. A window in RStudio
         will open (called `.Renviron`)
-
-    -   Type `R_LIBS_USER=/Users/brandon/Rpackages` in that new window
+    <!-- end list -->
+      - Type `R_LIBS_USER=/Users/brandon/Rpackages` in that new window
         (replacing `brandon` with your Mac login name)
-    -   Do not try to execute this command in R. We are creating a file
+      - Do not try to execute this command in R. We are creating a file
         to save on your hard drive, not trying to run a function in R.
-
-    1.  Save file and close this tab.
-    2.  Restart RStudio
-    3.  In RStudio, run `Sys.getenv('R_LIBS_USER')`
-    4.  Check to see that the output matches the location you entered
+    <!-- end list -->
+    4.  Save file and close this tab.
+    5.  Restart RStudio
+    6.  In RStudio, run `Sys.getenv('R_LIBS_USER')`
+    7.  Check to see that the output matches the location you entered
         before (e.g., `/Users/brandon`)
 
-Prereqisite 2
--------------
+# Prereqisite 2 (Windows)
 
--   Windows:
+Windows users may want to read this before proceeding:
+<https://rpubs.com/tomhopper/windows_nonadmin_install>
+
+  - Windows:
     1.  Using File Explorer, create a new folder on your hard drive
         (**not the network drive**) under your users folder (e.g.,
         `C:/Users/username/R/RPackages`)
@@ -152,21 +148,20 @@ Prereqisite 2
         interactive console (bottom left)
     3.  In RStudio, run `usethis::edit_r_environ()`. A window in RStudio
         will open (called `.Renviron`)
-
-    -   Type `R_LIBS_USER=C:/Users/username/R/RPackages` in that new
+    <!-- end list -->
+      - Type `R_LIBS_USER=C:/Users/username/R/RPackages` in that new
         window (*note the direction of the slashes may be the opposite
         of what you usually use*)
-    -   Do not try to execute this command in R. We are creating a file
+      - Do not try to execute this command in R. We are creating a file
         to save on your hard drive, not trying to run a function in R.
-
-    1.  Save file and close this tab.
-    2.  Restart RStudio
-    3.  In RStudio, run `Sys.getenv('R_LIBS_USER')`
-    4.  Check to see that the output matches the location you entered
+    <!-- end list -->
+    4.  Save file and close this tab.
+    5.  Restart RStudio
+    6.  In RStudio, run `Sys.getenv('R_LIBS_USER')`
+    7.  Check to see that the output matches the location you entered
         before (e.g., `C:/Users/username/R/RPackages`)
 
-R Projects
-==========
+# R Projects
 
 In the top right corner of RStudio, note the icon and text reading,
 **Project: (None)**
@@ -179,28 +174,32 @@ In the top right corner of RStudio, note the icon and text reading,
     The goal is to start a new project for this workshop called **R
     basics**
 
--   If you haven’t created a new directory for this workshop, click
-    **New Directory**
-    -   Then click **New Project**
-    -   Name your directory and decide where it goes.
--   If you have created a new directory for this workshop, click
-    **Existing Directory**
-    -   Choose the correct directory
+<!-- end list -->
 
-1.  Check the **Open in new session** box.
-2.  Click **Create Project**.
+  - If you haven’t created a new directory for this workshop, click
+    **New Directory**
+      - Then click **New Project**
+      - Name your directory and decide where it goes.
+  - If you have created a new directory for this workshop, click
+    **Existing Directory**
+      - Choose the correct directory
+
+<!-- end list -->
+
+5.  Check the **Open in new session** box.
+6.  Click **Create Project**.
 
 This will create a new file in your chosen directory that is specific to
 this particular project. Doing this for all of your R projects will help
-make your work more manageable.
+make your work more
+manageable.
 
-R Rule \#1: Always program in the scripting window (top left) unless you have a good reason not to.
-===================================================================================================
+# R Rule \#1: Always program in the scripting window (top left) unless you have a good reason not to.
 
--   Click File -&gt; New File -&gt; R Script
+  - Click File -\> New File -\> R
+Script
 
-R Rule \#2: Always annotate your syntax to leave notes for your future self and anyone else who might use your code.
-====================================================================================================================
+# R Rule \#2: Always annotate your syntax to leave notes for your future self and anyone else who might use your code.
 
 The hash symbol (`#`) should be used to denote comments (R will ignore
 anything to the right of a `#`)
@@ -229,61 +228,66 @@ a_message # This worked because I used the correct case
 # and the red stop button, which tells me R is not ready for a new command yet.)
 ```
 
-Comments and other keyboard shortcuts in RStudio
-================================================
+# Comments and other keyboard shortcuts in RStudio
 
--   You can automatically comment or uncomment one or more lines in R
+  - You can automatically comment or uncomment one or more lines in R
     (for example, if you write some code that you don’t want to run
     every time) by highlighting the lines you want commented and
     pressing:
-    -   `command` + `shift` + `c` (Mac)
-    -   `Ctrl` + `Shift` + `c` (PC)
--   For more keyboard shortcuts, press
-    -   `option` + `shift` + `k` (Mac)
-    -   `Alt` + `Shift` + `k` (PC)
+      - `command` + `shift` + `c` (Mac)
+      - `Ctrl` + `Shift` + `c` (PC)
+  - For more keyboard shortcuts, press
+      - `option` + `shift` + `k` (Mac)
+      - `Alt` + `Shift` + `k` (PC)
 
-Running commands from the scripting window
-==========================================
+# Running commands from the scripting window
 
 You have several options:
 
 1.  To run one line at a time,
 
--   Place your cursor (blinking) on that line and either…
-    -   press `Command` + `return` (Mac)
-    -   press `Ctrl` + `Enter` (PC)
-    -   click `Run` at the top right of the scripting window
+<!-- end list -->
 
-1.  To run multiple lines at a time
+  - Place your cursor (blinking) on that line and either…
+      - press `Command` + `return` (Mac)
+      - press `Ctrl` + `Enter` (PC)
+      - click `Run` at the top right of the scripting window
 
--   Highlight the lines you want to run and either…
-    -   press `Command` + `return` (Mac)
-    -   press `Ctrl` + `Enter` (PC)
-    -   click `Run` at the top right of the scripting window
+<!-- end list -->
 
-1.  To run only part of a single line
+2.  To run multiple lines at a time
 
--   Highlight the lines you want to run and either…
-    -   press `Command` + `return` (Mac)
-    -   press `Ctrl` + `Enter` (PC)
-    -   click `Run` at the top right of the scripting window
+<!-- end list -->
 
-R Packages
-==========
+  - Highlight the lines you want to run and either…
+      - press `Command` + `return` (Mac)
+      - press `Ctrl` + `Enter` (PC)
+      - click `Run` at the top right of the scripting window
 
--   Packages provided added functionality beyond base R and are
+<!-- end list -->
+
+3.  To run only part of a single line
+
+<!-- end list -->
+
+  - Highlight the lines you want to run and either…
+      - press `Command` + `return` (Mac)
+      - press `Ctrl` + `Enter` (PC)
+      - click `Run` at the top right of the scripting window
+
+# R Packages
+
+  - Packages provided added functionality beyond base R and are
     essential to R’s utility.
--   The `pacman` package makes package management efficient and easy.
+  - The `pacman` package makes package management efficient and easy.
 
-Installing packages (base R)
-----------------------------
+## Installing packages (base R)
 
 ``` r
 install.packages("pacman")
 ```
 
-Loading packages (base R)
--------------------------
+## Loading packages (base R)
 
 Installing a packge in R is only half the battle. The next step is to
 load it into your active session.
@@ -298,11 +302,9 @@ installed, and you won’t need them all loaded at the same time. Only
 load the ones you need to keep resource utilization manageable,
 especially on computers with low RAM.
 
-Pacman
-======
+# Pacman
 
-Installing and loading packages (pacman)
-----------------------------------------
+## Installing and loading packages (pacman)
 
 Now that we have pacman installed, we can use it to manage our packages.
 Let’s try to load the `tidyverse` package, which is actually a
@@ -322,8 +324,7 @@ loaded, click on the **Packages** tab in the lower right quadrant of
 RStudio. If a package is there, it’s installed, and if its box is
 checked, it’s loaded and ready for you to use.
 
-Help files
-==========
+# Help files
 
 While we’re in the packages pane, let’s scroll down to find the `psych`
 package. It should have a check next to it indicating that it has been
@@ -337,18 +338,21 @@ package. Each of the Help Pages shown here corresponds to a single
 function within that package. Take a quick look to see everything the
 `psych` package offers.
 
--   Click on the help file for the `rescale` function, which produces
+  - Click on the help file for the `rescale` function, which produces
     standardized scores with a chosen distribution.
-    -   Note the section on **Usage**. This tells you the code you need
+      - Note the section on **Usage**. This tells you the code you need
         to properly execute the function.
-    -   Each function usually takes one or more parameters as arguments.
+      - Each function usually takes one or more parameters as arguments.
         This function uses 4 arguments:
-        -   `x` - the raw scores
-        -   `mean` - desired mean of the rescaled scores
-        -   `sd` - desired standard deviation of the rescaled scores
-        -   `df` - if TRUE, returns a data frame, otherwise a matrix
-    -   Give it a try. The example below takes 10 made up scores and
-        standardizes them.
+          - `x` - the raw scores
+          - `mean` - desired mean of the rescaled scores
+          - `sd` - desired standard deviation of the rescaled scores
+          - `df` - if TRUE, returns a data frame, otherwise a matrix
+      - Give it a try. The example below takes 10 made up scores and
+        standardizes
+them.
+
+<!-- end list -->
 
 ``` r
 myScores <- c(101, 130, 65, 87, 119, 102, 74, 96, 101, 88) # Put 10 made up scores into an object called myScores
@@ -358,8 +362,7 @@ rescale(x = myScores) # runs the rescale command on the data stored in the mySco
 *Using the help file as a guide, try converting these same 10 scores to
 scaled scores (M = 10, SD = 3) instead of IQ scores.*
 
-Some things to note
-===================
+# Some things to note
 
 How did that work if I didn’t enter all of the required commands into
 the rescale function? I only specified the value of the `x` parameter,
@@ -383,8 +386,7 @@ What would happen if we ran this 👇? Give it a try.
 rescale(c(101, 130, 65, 87, 119, 102, 74, 96, 101, 88))
 ```
 
-The c function
-==============
+# The c function
 
 In R, the `c()` function is an important tool for combining multiple
 data points into a single object.
@@ -426,9 +428,12 @@ That looks better. For many R functions, all of your data points have to
 be passed as single objects. `c()` is the simplest way of concatenating
 multiple data points into a single vector or list.
 
-More complex data structures
-============================
+# More complex data structures
 
 Most of the time, our data are more complex than 5 data points. And
 those data sets are usually stored in separate files in various formats
 (e.g., .csv, .sav). Let’s learn to read in some data.
+
+<!-- To convert Rmd file to R code: -->
+
+<!-- purl("R-basics-1.Rmd") -->
