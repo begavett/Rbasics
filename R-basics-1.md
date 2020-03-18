@@ -1,3 +1,5 @@
+<!-- output: slidy_presentation -->
+
 Really quick introduction to R and RStudio
 ==========================================
 
@@ -103,26 +105,39 @@ Prereqisites
 Prereqisite 2
 -------------
 
-Make sure you are able to install packages.
+**Please read the following instructions closely before diving in.**
 
-*This is a problem on any UWA computer on which you do not have
-administrative privileges.*
+Let’s make sure you are able to install packages.
+
+First, run the following command in the RStudio console:
+
+``` r
+install.packages("car")
+```
+
+If you get an error, you’ll need to work through the steps below.
+Otherwise, you can ignore these steps.
+
+*Installing packages can be a problem on any computer on which you do
+not have administrative privileges.*
 
 -   Mac:
-    1.  Create new folder under `/Users/brandon` (replacing `brandon`
-        with your Mac login name) called `RPackages`
-        (`/Users/brandon/RPackages`)
-    2.  Run `install.packages("usethis")` from the interactive console
-        (bottom left)
-    3.  Run `usethis::edit_r_environ()`. A window in RStudio will open
-        (called `.Renviron`)
+    1.  Using Finder, create new folder under `/Users/brandon`
+        (replacing `brandon` with your Mac login name) called
+        `RPackages` (`/Users/brandon/RPackages`)
+    2.  In RStudio, run `install.packages("usethis")` from the
+        interactive console (bottom left)
+    3.  In RStudio, run `usethis::edit_r_environ()`. A window in RStudio
+        will open (called `.Renviron`)
 
     -   Type `R_LIBS_USER=/Users/brandon/Rpackages` in that new window
         (replacing `brandon` with your Mac login name)
+    -   Do not try to execute this command in R. We are creating a file
+        to save on your hard drive, not trying to run a function in R.
 
-    1.  Save
+    1.  Save file and close this tab.
     2.  Restart RStudio
-    3.  Run `Sys.getenv('R_LIBS_USER')`
+    3.  In RStudio, run `Sys.getenv('R_LIBS_USER')`
     4.  Check to see that the output matches the location you entered
         before (e.g., `/Users/brandon`)
 
@@ -130,20 +145,25 @@ Prereqisite 2
 -------------
 
 -   Windows:
-    1.  Create new folder under the `C` Drive called `RPackages`
-        (`C:/RPackages`)
-    2.  Run `install.packages("usethis")` from the interactive console
-        (bottom left)
-    3.  Run `usethis::edit_r_environ()`. A window in RStudio will open
-        (called `.Renviron`)
+    1.  Using File Explorer, create a new folder on your hard drive
+        (**not the network drive**) under your users folder (e.g.,
+        `C:/Users/username/R/RPackages`)
+    2.  In RStudio, run `install.packages("usethis")` from the
+        interactive console (bottom left)
+    3.  In RStudio, run `usethis::edit_r_environ()`. A window in RStudio
+        will open (called `.Renviron`)
 
-    -   Type `R_LIBS_USER=C:/RPackages` in that new window
+    -   Type `R_LIBS_USER=C:/Users/username/R/RPackages` in that new
+        window (*note the direction of the slashes may be the opposite
+        of what you usually use*)
+    -   Do not try to execute this command in R. We are creating a file
+        to save on your hard drive, not trying to run a function in R.
 
-    1.  Save
+    1.  Save file and close this tab.
     2.  Restart RStudio
-    3.  Run `Sys.getenv('R_LIBS_USER')`
+    3.  In RStudio, run `Sys.getenv('R_LIBS_USER')`
     4.  Check to see that the output matches the location you entered
-        before (`C:/RPackages`)
+        before (e.g., `C:/Users/username/R/RPackages`)
 
 R Projects
 ==========
