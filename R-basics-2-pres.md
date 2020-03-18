@@ -40,6 +40,11 @@ $3$. Right click on the `Raw` button.
 
 $4$. Click `Save Link As...` or the equivalent for your browser.
 
+![plot of chunk githubSS](githubSS.png)
+
+Setup (cont.)
+========================================================
+
 $5$. Save the file (`R-basics-2-pres.Rpres`) into your R project directory (you created this last time or just now)
 
 $6$. In the lower right quadrant of RStudio, go to the Files tab and click on the `R-basics-2-pres.Rpres` file you just downloaded. It should open in RStudio.
@@ -51,6 +56,8 @@ $8$. Close the `R-basics-2-pres.Rpres` tab (the presentation should stay open in
 $9$. Open a new R Script file (File -> New File -> R Script) or use the same one you worked with last time.
 
 You may need to drag the horizontal and vertical window separators in RStudio to view the presentation in your preferred dimensions.
+
+![plot of chunk RS1](RStudio.png)
 
 Where we left off...
 ========================================================
