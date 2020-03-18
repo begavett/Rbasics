@@ -235,7 +235,7 @@ Histograms
 
 In addition to descriptives, we may also want to visualize our data. One of R's greatest features is its plotting capabilities, which is an entire workshop in and of itself. For now, we'll stick with some simple plots.
 
-```{r hist}
+```{r hist, fig.keep='all'}
 hist(mySPSSdata$AGE)
 ```
 
@@ -244,14 +244,14 @@ Scatterplots
 
 Scatterplots are as simple as specifying what you want on the x and y axes.
 
-```{r scatterplots}
+```{r scatterplots, fig.keep='all'}
 plot(x = mySPSSdata$AGE, y = mySPSSdata$MMSE)
 ```
 
 Plot customization
 ========================================================
 
-```{r prettyScatterplots}
+```{r prettyScatterplots, fig.keep='all'}
 plot(x = mySPSSdata$AGE, y = mySPSSdata$MMSE, xlab = "Age (years)", ylab = "MMSE Score", 
      main = "MMSE Scores by Age")
 ```
@@ -550,7 +550,7 @@ Plot the results with ggplot
 
 ggplot is fantastic, so you should learn how to use it. Here's a really quick summary:
 
-```{r ggplot, message = FALSE, error = FALSE, warning = FALSE}
+```{r ggplot, message = FALSE, error = FALSE, warning = FALSE, fig.keep='all'}
 myDataSubset$Gender <- factor(myDataSubset$PTGENDER, levels = 1:2, labels = c("Female", "Male")) # Convert PTGENDER to factor
 p_load(ggplot2) # Loads the ggplot2 package
 ggplot(data = myDataSubset, aes(x = PTEDUCAT, y = TRABSCOR, colour = Gender)) + # Specifies main elements of plot
