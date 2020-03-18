@@ -1,0 +1,664 @@
+---
+title: "R basics 1"
+author: "Brandon Gavett"
+date: "12/3/2020"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Really quick introduction to R and RStudio
+
+No need to run R itself - use RStudio (requires R to be installed) 
+
+- Top left: scripting window
+  - 90% of the work happens here
+- Bottom left: Console (+ Terminal & Jobs)
+  - The interactive part of R
+- Top right: Environment & History
+  - What's in memory for the current session
+- Bottom right: Files, Plots, Packages, and Help.
+  - Helpful tools and visuals
+  
+# The extreme basics of R syntax
+
+`object <- value`
+
+- The arrow assignment operator (`<-`) tells R to store what's on the right of the arrow in the object named on the left side of the arrow.
+  - The object on the left can be given almost any name you choose, with several exceptions:
+    + It can't start with a number (e.g., `1stVariable` won't work - use `firstVariable` instead)
+    + It can't contain spaces (e.g., `first variable` won't work - use `first_variable` instead)
+    + It can't contain special characters other than an underscore or a period.
+    + You should avoid giving it a name that is already used by R (although this is technically allowed, it is not best practice)
+        + e.g., `mean` is a function in R that is used to calculate the mean.
+            - Therefore, you should avoid creating an object called `mean`.
+  - The part on the right can be pretty much anything numeric (not quoted unless you don't want it to be treated as a number) or text (all text must be surrounded by single or double quotation marks) or more complex things that we will eventually cover.
+
+# R Objects
+
+Once an object is created, it can be viewed or manipulated.
+
++ To see the contents of an object, just call the object's name, or, to be more explicit, ask its contents to be printed.
+    - `object`
+    - `print(object)`
++ An example of manipulating an object would be to perform some mathematical operation on the object.
+    - `object + 1` (adds 1 to each element stored in `object`)
+    - `sqrt(object)` (takes the square root of each element in `object`)
+    - `object^2` (squares the value of each element in `object`)
+
+The syntax `print(object)` and `sqrt(object)` both illustrate another feature of R: functions. We'll cover these more later.
+
++ `print` and `sqrt` are the functions, and `object` is what is passed to the function. 
+
+# Interactive console (bottom left)
+
+Try these 15 basic exercises. Type the following commands next to the `>` and then press Enter/Return. Make note of what happens.
+
+```{r ex15, eval = FALSE}
+2 + 2
+5
+x <- 5
+print(x)
+x
+y <- 100
+y
+z <- x + y
+z
+z - x == y
+a_message <- "Case matters!"
+a_Message
+a_message
+"Text goes in quotes, numbers don't"
+"I am purposefully leaving off the closing quotation marks and running this command anyway!
+```
+
+# Prereqisites
+
+## Prereqisite 1
+
+Make sure your software is up to date.
+
+- R [https://cran.r-project.org/](https://cran.r-project.org/)
+- RStudio [https://www.rstudio.com/products/rstudio/download/](https://www.rstudio.com/products/rstudio/download/)
+
+# Prereqisites
+
+## Prereqisite 2
+
+Make sure you are able to install packages.
+
+*This is a problem on any UWA computer on which you do not have administrative privileges.*
+
+- Mac: 
+  1. Create new folder under `/Users/brandon` (replacing `brandon` with your Mac login name) called `RPackages` (`/Users/brandon/RPackages`)
+  2. Run `install.packages("usethis")` from the interactive console (bottom left)
+  3. Run `usethis::edit_r_environ()`. A window in RStudio will open (called `.Renviron`)
+    - Type `R_LIBS_USER=/Users/brandon/Rpackages` in that new window (replacing `brandon` with your Mac login name)
+  4. Save
+  5. Restart RStudio
+  6. Run `Sys.getenv('R_LIBS_USER')`
+  7. Check to see that the output matches the location you entered before (e.g., `/Users/brandon`)
+
+## Prereqisite 2
+
+- Windows: 
+  1. Create new folder under the `C` Drive called `RPackages` (`C:/RPackages`)
+  2. Run `install.packages("usethis")` from the interactive console (bottom left)
+  3. Run `usethis::edit_r_environ()`. A window in RStudio will open (called `.Renviron`)
+    - Type `R_LIBS_USER=C:/RPackages` in that new window
+  4. Save
+  5. Restart RStudio
+  6. Run `Sys.getenv('R_LIBS_USER')`
+  7. Check to see that the output matches the location you entered before (`C:/RPackages`)
+
+# R Projects
+
+In the top right corner of RStudio, note the icon and text reading, **Project: (None)**
+
+1. Click this
+2. Click **New Project...**
+3. Click **Don't Save** if prompted
+4. Choose either New Directory or Existing Directory, depending on whether you've already created a new directory for this workshop. The goal is to start a new project for this workshop called **R basics**
+  + If you haven't created a new directory for this workshop, click **New Directory** 
+      - Then click **New Project**
+      - Name your directory and decide where it goes.
+  + If you have created a new directory for this workshop, click **Existing Directory**
+      - Choose the correct directory
+5. Check the **Open in new session** box.
+6. Click **Create Project**.
+          
+This will create a new file in your chosen directory that is specific to this particular project. Doing this for all of your R projects will help make your work more manageable.
+
+# R Rule #1: Always program in the scripting window (top left) unless you have a good reason not to.
+
+- Click File -> New File -> R Script
+
+# R Rule #2: Always annotate your syntax to leave notes for your future self and anyone else who might use your code.
+
+The hash symbol (`#`) should be used to denote comments (R will ignore anything to the right of a `#`)
+
+An example of annotating syntax:
+
+```{r annotationExample, echo = TRUE, eval = FALSE}
+2 + 2 # R can do basic math!
+5 # R will also echo back numbers to me
+x <- 5 # No output was produced. 
+print(x) # R saved the number 5 as an object named x. That's what the <- (left arrow) does.
+x # I can print the contents of x with or without the print command
+y <- 100 # R is storing the number 100 as an object named y
+y # This lets me see what's stored in y
+z <- x + y # Basic algebra
+z # The object named z is now storing the value 105 (x + y = 5 + 100)
+z - x == y # The double equals sign tells R to check whether two values are equal
+a_message <- "Case matters!" # We are storing a text value inside an object called a_message
+a_Message # This produced an error because the M was capitalized
+a_message # This worked because I used the correct case
+"Text goes in quotes, numbers don't" # R will also echo back text to me.
+"I am purposefully leaving off the closing quotation marks and running this command anyway!
+
+# Nothing happens... 
+# R is waiting for me to close the quotation marks I left open (note the + symbol in the console instead of the > symbol
+# and the red stop button, which tells me R is not ready for a new command yet.)
+```
+
+# Comments and other keyboard shortcuts in RStudio
+
++ You can automatically comment or uncomment one or more lines in R (for example, if you write some code that you don't want to run every time) by highlighting the lines you want commented and pressing:
+  - `command` + `shift` + `c` (Mac)
+  - `Ctrl` + `Shift` + `c` (PC)
++ For more keyboard shortcuts, press 
+  - `option` + `shift` + `k` (Mac)
+  - `Alt` + `Shift` + `k` (PC)
+
+# Running commands from the scripting window
+
+You have several options:
+
+1. To run one line at a time, 
+  - Place your cursor (blinking) on that line and either...
+    - press `Command` + `return` (Mac)
+    - press `Ctrl` + `Enter` (PC)
+    - click `Run` at the top right of the scripting window
+2. To run multiple lines at a time
+  - Highlight the lines you want to run and either...
+    - press `Command` + `return` (Mac)
+    - press `Ctrl` + `Enter` (PC)
+    - click `Run` at the top right of the scripting window
+3. To run only part of a single line
+  - Highlight the lines you want to run and either...
+    - press `Command` + `return` (Mac)
+    - press `Ctrl` + `Enter` (PC)
+    - click `Run` at the top right of the scripting window
+        
+# R Packages
+
++ Packages provided added functionality beyond base R and are essential to R's utility.
++ The `pacman` package makes package management efficient and easy.
+
+## Installing packages (base R)
+
+```{r ip, eval = FALSE}
+install.packages("pacman")
+```
+
+## Loading packages (base R)
+
+Installing a packge in R is only half the battle. The next step is to load it into your active session.
+
+```{r lp}
+library(pacman)
+```
+
+R does not automatically load every installed package because you may eventually reach the point where you have hundreds of packages installed, and you won't need them all loaded at the same time. Only load the ones you need to keep resource utilization manageable, especially on computers with low RAM.
+
+# Pacman
+
+## Installing and loading packages (pacman)
+
+Now that we have pacman installed, we can use it to manage our packages. Let's try to load the `tidyverse` package, which is actually a collection of extremely useful packages. The `psych` package has some great tools we may want to utilize, so let's try to load that too.
+
+pacman will load the `tidyverse` suite and `psych` packages if they're already installed, and if they're not installed, pacman will do that for us.
+
+```{r otherPackages}
+p_load(tidyverse, psych)
+```
+
+If you want to verify that these packages have been installed and loaded, click on the **Packages** tab in the lower right quadrant of RStudio. If a package is there, it's installed, and if its box is checked, it's loaded and ready for you to use. 
+
+# Help files
+
+While we're in the packages pane, let's scroll down to find the `psych` package. It should have a check next to it indicating that it has been loaded. If not, make sure you ran the command `p_load(tidyverse, psych)` and that it executed without any errors.
+
+Click on the word `psych` to open its help files.
+
+You will see a table of contents and other information about this package. Each of the Help Pages shown here corresponds to a single function within that package. Take a quick look to see everything the `psych` package offers.
+
++ Click on the help file for the `rescale` function, which produces standardized scores with a chosen distribution.
+  - Note the section on **Usage**. This tells you the code you need to properly execute the function.
+  - Each function usually takes one or more parameters as arguments. This function uses 4 arguments:
+    - `x` - the raw scores
+    - `mean` - desired mean of the rescaled scores
+    - `sd` - desired standard deviation of the rescaled scores
+    - `df` - if TRUE, returns a data frame, otherwise a matrix
+  - Give it a try. The example below takes 10 made up scores and standardizes them.
+    
+```{r rescale, eval = FALSE}
+myScores <- c(101, 130, 65, 87, 119, 102, 74, 96, 101, 88) # Put 10 made up scores into an object called myScores
+rescale(x = myScores) # runs the rescale command on the data stored in the myScores object
+```
+
+*Using the help file as a guide, try converting these same 10 scores to scaled scores (M = 10, SD = 3) instead of IQ scores.*
+
+# Some things to note
+
+How did that work if I didn't enter all of the required commands into the rescale function? I only specified the value of the `x` parameter, not the `mean`, `sd`, or `df` parameters.
+
+```{r rescale2, eval = FALSE}
+myScores <- c(101, 130, 65, 87, 119, 102, 74, 96, 101, 88)
+rescale(x = myScores)
+```
+
+We did not do this `r emo::ji("point_down")`. Why not? What would happen if we did? Give it a try.
+
+```{r rescale3, eval = FALSE}
+rescale(101, 130, 65, 87, 119, 102, 74, 96, 101, 88)
+```
+
+What would happen if we ran this `r emo::ji("point_down")`? Give it a try.
+
+```{r rescale4, eval = FALSE}
+rescale(c(101, 130, 65, 87, 119, 102, 74, 96, 101, 88))
+```
+
+# The c function
+
+In R, the `c()` function is an important tool for combining multiple data points into a single object.
+
+For example, suppose I wanted to calculate the mean of these five numbers:
+
+12, 58, 481, 84, 9
+
+To figure out how to do this, I can look at the help file for the `mean` function.
+
+```{r mean1}
+?mean
+```
+
+This tells me that I need to enter a value for x, which represents the numbers that I want to average.
+
+If I didn't use the `c()` function, my command would look like this:
+
+```{r mean2}
+mean(12, 58, 481, 84, 9)
+```
+
+`r emo::ji("monocle")`
+
+Let's try it with `c()`
+
+```{r mean3}
+mean(c(12, 58, 481, 84, 9))
+```
+
+That looks better. For many R functions, all of your data points have to be passed as single objects. `c()` is the simplest way of concatenating multiple data points into a single vector or list.
+
+# More complex data structures
+
+Most of the time, our data are more complex than 5 data points. And those data sets are usually stored in separate files in various formats (e.g., .csv, .sav). Let's learn to read in some data.
+
+# CSV
+
++ CSV (comma separated values) is probably the most flexible data format and most universally compatible, because it's stored as plain text. The downside of CSV files is that they don't contain metadata, like value labels or missing flags.
+  - Depending on the data, this may or may not be a problem.
+  - In general, I prefer CSV.
++ Reading in a CSV file to R is easy.
+
+```{r load, echo = FALSE}
+p_load(fakeR, ADNIMERGE, haven, magrittr)
+```
+
+```{r fakedata, echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, eval = FALSE}
+origData <- adnimerge %>%
+  filter(VISCODE == "bl") %>%
+  dplyr::select(-c("Years.bl", "Month.bl", "Month", "M", "RID", "COLPROT", "ORIGPROT", "PTID", "SITE",
+                                                   "VISCODE", "EXAMDATE", "IMAGEUID", "EXAMDATE.bl", "CDRSB.bl", "ADAS11.bl", "ADAS13.bl", "ADASQ4.bl", "MMSE.bl", "RAVLT.immediate.bl", "RAVLT.learning.bl",
+                                                   "RAVLT.forgetting.bl", "RAVLT.perc.forgetting.bl", "LDELTOTAL.bl",
+                                                   "DIGITSCOR.bl", "TRABSCOR.bl", "FAQ.bl", "mPACCdigit.bl",  "mPACCtrailsB.bl", "FLDSTRENG.bl",
+            "FSVERSION.bl", "IMAGEUID.bl", "Ventricles.bl", "Hippocampus.bl", 
+"WholeBrain.bl", "Entorhinal.bl", "Fusiform.bl", "MidTemp.bl", 
+"ICV.bl", "MOCA.bl", "EcogPtMem.bl", "EcogPtLang.bl", "EcogPtVisspat.bl", 
+"EcogPtPlan.bl", "EcogPtOrgan.bl", "EcogPtDivatt.bl", "EcogPtTotal.bl", 
+"EcogSPMem.bl", "EcogSPLang.bl", "EcogSPVisspat.bl", "EcogSPPlan.bl", 
+"EcogSPOrgan.bl", "EcogSPDivatt.bl", "EcogSPTotal.bl", "ABETA.bl", 
+"TAU.bl", "PTAU.bl", "FDG.bl", "PIB.bl", "AV45.bl", "FSVERSION", "FLDSTRENG", "DX.bl", "DIGITSCOR", "AV45", "PIB")) %>%
+  droplevels()
+
+origData$PTGENDER <- factor(origData$PTGENDER)
+origData$PTMARRY <- factor(origData$PTMARRY)
+origData$ABETA <- as.numeric(origData$ABETA)
+origData$TAU <- as.numeric(origData$TAU)
+origData$PTAU <- as.numeric(origData$PTAU)
+#origData$DX <- ordered(origData$DX, levels = c("Dementia", "MCI", "CN"))
+#origData$APOE4 <- ordered(origData$APOE4, levels = 0:2)
+
+origData <- data.frame(lapply(origData, function(x){
+  if("numeric" %in% class(x)) {
+    temp <- as.numeric(x)
+  } else if("integer" %in% class(x)) {
+    temp <- as.integer(x)
+  } else temp <- x
+  return(temp)
+}))
+
+origData <- filter(origData, !is.na(DX))
+
+#rigData <- origData[complete.cases(origData),]
+set.seed(6000)
+origData <- sample_n(origData, 1000)
+
+set.seed(90210)
+fakeData <- simulate_dataset(origData, ignore = c("DX", "APOE4"))
+fakeData$ID <- (1:nrow(fakeData))+1000
+fakeData <- dplyr::select(fakeData, ID, everything())
+
+fakeData$MMSE <- floor(fakeData$MMSE)
+fakeData$MMSE[fakeData$MMSE > 30] <- 30
+fakeData$MMSE[fakeData$MMSE < 0] <- 0
+
+write.csv(fakeData, "fakeData.csv", row.names = FALSE)
+write_sav(fakeData, "fakeData.sav")
+```
+
+http://bit.ly/Rbasics1
+
+```{r readCSV}
+myCSVdata <- read.csv("fakeData.csv", header = TRUE)
+```
+
+If we want to see what our data look like, we have several options. Try each of these and annotate your code to remind yourself of how they differ.
+
+Dump as much as possible to screen
+
+```{r dumpCSV, eval = FALSE}
+myCSVdata
+```
+
+`View()`
+
+```{r viewCSV, eval = FALSE}
+View(myCSVdata)
+```
+
+`head()`
+
+```{r headCSV, eval = FALSE}
+head(myCSVdata)
+```
+
+`glimpse()`
+
+```{r glimpseCSV, eval = FALSE}
+glimpse(myCSVdata)
+```
+
+# Removing objects
+
+We won't be working with the CSV file anymore, so it's good practice to remove it from our R session. For that, we use the `rm()` command.
+
+```{r rm}
+rm(myCSVdata)
+```
+
+# SPSS Files
+
+If your data set is in SPSS format, you can use the `haven` package to read it in to R. First, let's make sure `haven` is loaded. Then, let's read in our SPSS file (.sav extension).
+
+```{r loadhaven}
+p_load(haven)
+```
+
+```{r readSPSS}
+mySPSSdata <- read_sav("fakeData.sav")
+```
+
+*Note: if your SPSS file has missing data codes that you want to import into R, you should add the argument `user_na = TRUE`, like this*:
+
+```{r readSPSS2, eval = FALSE}
+mySPSSdata <- read_sav("fakeData.sav", user_na = TRUE)
+```
+
+Next, use the same 4 commands you previously used to view the CSV object, but applied to the new `mySPSSdata` object you just created.
+
+How are they the same? How are they different?
+
+# Getting to Know Your Data
+
+When reading in CSV and SAV files the default is to make the objects a `data.frame`, which is the most common way of storing rectangular data where different columns store different types of data (e.g., some numeric, some character, some factors).
+
+Once you have your data frame loaded into R, it is important to learn how to view, manipulate, and summarize its contents.
+
+# Data structure
+
+Every `data.frame` or `tibble` has its own internal structure that is essential for you to be aware of. To view the structure of the data, execute the `str()` function.
+
+```{r str, eval = FALSE}
+str(mySPSSdata)
+```
+
+# Data structure
+
+One of the most important pieces of information you can get from learning your data's structure is the name of the variables (columns) in your data object.
+
+Note how each column is prefixed with a dollar sign. If we wanted to examine one specific variable (column) of the data set, we could ask for only that variable to be printed to our screen:
+
+```{r dollar, eval = FALSE}
+mySPSSdata$AGE
+```
+
+This shows the contents of the `AGE` variable in my data set. If I only wanted to see the beginning of that column (first 6 rows by default), I could ask R to show me the header with the `head()` function. Similarly, the `tail()` function shows me the last 6 rows in that column.
+
+```{r head1}
+head(mySPSSdata$AGE)
+```
+
+```{r tail1}
+tail(mySPSSdata$AGE)
+```
+
+The `head()` and `tail()` functions can be applied to entire data frames, too. Try calling `head()` and `tail()` on the `mySPSSdata` object.
+
+*Advanced skills practice: Try asking `R` to show you the last 10 rows of the `mySPSSdata` object instead of the default of 6 rows.*
+
+
+# Column names
+
+The easiest way to see the name of every column in your data set is to ask for its `names()`.
+
+```{r names, eval = FALSE}
+names(mySPSSdata)
+```
+
+The same thing could be achieved with the `colnames` function.
+
+```{r colnames, eval = FALSE}
+colnames(mySPSSdata)
+```
+
+
+# Descriptive Statistics
+
+The `psych` package, which we loaded earlier, does a great job providing descriptive statistics. Let's look at descriptives for our entire data set using the `describe()` function.
+
+*Technical detail: sometimes different packages have functions with the same name. For example, the `Hmisc` and `psych` packages both have a function called `describe()`. To explicitly tell R to use the `describe()` function from the `psych` package, we prepend our function call with `psych::`.*
+
+```{r describe}
+psych::describe(mySPSSdata)
+```
+
+# Descriptive Statistics
+
+The `psych` package also allows us to view descriptives by group. Let's look at the same descriptives, but broken down by diagnosis (`DX`) using the `describeBy` function.
+
+```{r describeBy, eval = FALSE}
+psych::describeBy(mySPSSdata, mySPSSdata$DX)
+```
+
+# Histograms
+
+In addition to descriptives, we may also want to visualize our data. One of R's greatest features is its plotting capabilities, but for now, we'll stick with some simple plots.
+
+```{r hist}
+hist(mySPSSdata$AGE)
+```
+
+# Scatterplots
+
+Scatterplots are as simple as specifying what you want on the x and y axes.
+
+```{r sp}
+plot(x = mySPSSdata$AGE, y = mySPSSdata$MMSE)
+```
+
+# Plot customization
+
+```{r spPretty}
+plot(x = mySPSSdata$AGE, y = mySPSSdata$MMSE, xlab = "Age (years)", ylab = "MMSE Score", 
+     main = "MMSE Scores by Age")
+```
+
+
+# Frequencies
+
+You'll notice that the `describe()` and `describeBy()` functions treated categorical variables as numeric, leading to some nonsensical values, like the mean of racial category (`PTRACCAT`). Instead, we can summarize categorical data as frequencies using the `table()` command.
+
+```{r table}
+table(mySPSSdata$PTRACCAT)
+```
+
+What can you conclude about the distribution of races in this sample?
+
+# Proportions
+
+If you want to see **prop**ortions instead of or in addition to frequencies, you can use the `prop.table()` function.
+
+```{r oops, eval = FALSE}
+prop.table(mySPSSdata$PTRACCAT)
+```
+
+<!-- https://emoji.muan.co/# -->
+
+`r emo::ji("confused")`
+
+# Problems
+
+However, as you can see here, we run into some problems. This weird output gives us a good excuse to delve a little deeper into the nuances of coding in R.
+
+Whereas `table()` simply required us to specify the column of data we wanted to use to calculate frequencies, `prop.table` doesn't expect the raw data as its input, it expects the table we just created as the input.
+
+So, how do we go about telling `prop.table` to work its magic on the results that are generated by `table`?
+
+# Nested functions
+
+We have three options to solve this problem.
+
+First, we could use nested functions (putting one function inside another function).
+
+```{r nest1}
+prop.table(table(mySPSSdata$PTRACCAT))
+```
+
+# Step by step
+
+Second, we could break our problem into two steps:
+
+1. Save the results of the `table()` function as a new object
+2. Run the `prop.table()` function on the new object
+
+Here's what that would look like:
+
+```{r step1}
+raceTable <- table(mySPSSdata$PTRACCAT)
+```
+  
+```{r step2}
+prop.table(raceTable)
+```
+
+# Piping
+
+To use pipes, we need to load the `magrittr` package.
+
+```{r loadmg}
+p_load(magrittr)
+```
+
+The `magrittr` pipe looks like this: `%>%` and can be typed one character at a time, or using the key-combination of `control` + `shift` + `M`.
+
+Here's how it could be used to solve our problem:
+
+```{r pipe}
+mySPSSdata$PTRACCAT %>% 
+  table() %>% 
+  prop.table()
+```
+
+Note how this is similar to our two other solutions:
+
+## Nested 
+
+```{r nest2, eval = FALSE}
+prop.table(table(mySPSSdata$PTRACCAT))
+```
+
+## Sequential
+
+```{r seq, eval = FALSE}
+raceTable <- table(mySPSSdata$PTRACCAT)
+prop.table(raceTable)
+```
+
+Learning how to use pipes can make your code easier to follow (a problem with nested functions), and it also reduces the number of objects you end up with in your system environment (a problem with creating intermediary objects).
+
+# A little more on piping
+
+If we wanted to save the results of our piping operations to a new object, we could have used the arrow assignment operator.
+
+```{r arrow}
+propTableWithPipes <- mySPSSdata$PTRACCAT %>% 
+  table() %>% 
+  prop.table()
+```
+
+# Split Apply Combine
+
+Piping can also be used in a family of operations called *split-apply-combine*.
+
+This does exactly what it says it should do.
+
+1. It splits your data set up into groups.
+2. It applies some function to the split data
+3. It combines the split data back together.
+
+For example, let's suppose we wanted to find the lowest, median, and highest 2.5% quantiles of CSF tau by marital status
+
+1. Split the data by diagnosis (`PTMARRY`)
+2. Apply the `quantile()` function to the education variable (`TAU`)
+3. Combine the data back together
+
+```{r sac1}
+mySPSSdata %>%
+  group_by(PTMARRY) %>%
+  summarise(low2.5 = quantile(TAU, .025),
+            median = median(TAU),
+            hi2.5 = quantile(TAU, .975))
+```
+
+# Review
+
+This is a good time to revisit any sticking points you encountered along the way (if there's time).
+
+# Summary
+
+Today's workshop gives you a pretty good background on how to do some basic R programming. Next week, we'll deal with more practical issues you might face when analyzing data.
