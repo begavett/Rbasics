@@ -326,3 +326,5 @@ That looks better. For many R functions, all of your data points have to be pass
 
 Most of the time, our data are more complex than 5 data points. And those data sets are usually stored in separate files in various formats (e.g., .csv, .sav). Let's learn to read in some data.
 
+<!-- To convert Rmd file to R code: -->
+<!-- purl("R-basics-1.Rmd") -->
