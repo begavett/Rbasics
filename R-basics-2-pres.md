@@ -77,6 +77,9 @@ CSV
 myCSVdata <- read.csv("fakeData.csv", header = TRUE)
 ```
 
+Looking at our data
+========================================================
+
 If we want to see what our data look like, we have several options. Try each of these and annotate your code to remind yourself of how they differ.
 
 Dump as much as possible to screen
@@ -382,6 +385,17 @@ p_load(magrittr)
 The `magrittr` pipe looks like this: `%>%` and can be typed one character at a time, or using the key-combination of `control` + `shift` + `M`.
 
 Here's how it could be used to solve our problem:
+
+
+```r
+mySPSSdata$PTRACCAT %>% 
+  table() %>% 
+  prop.table()
+```
+
+
+Piping
+========================================================
 
 
 ```r
