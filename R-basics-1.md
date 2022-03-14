@@ -1,12 +1,3 @@
-output: md\_document: variant: markdown\_github
-
-R-basics-1
-========================================================
-author: Brandon Gavett
-date: 14/3/2022
-autosize: true
-
-
 Why use R?
 ========================================================
 
