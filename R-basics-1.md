@@ -4,12 +4,10 @@ author: Brandon Gavett
 date: 14/3/2022
 autosize: true
 
+output: md\_document: variant: markdown\_github
+
 Why use R?
 ========================================================
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 - It has become the state of the art for statistical analysis in psychology and beyond
 - It is free and open source
