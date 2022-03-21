@@ -1,0 +1,535 @@
+Where we left off
+========================================================
+
+(*Open the RBasics project we created last time, if not open already*)
+
+Restoring our previously loaded packages...
+
+```{r init}
+library(pacman) # Makes the p_load function available
+p_load(tidyverse, psych) # Loads the specified packages (and installs them if not installed)
+```
+
+Using the `rescale` function.
+
+```{r rescale, eval = FALSE}
+myScores <- c(101, 130, 65, 87, 119, 102, 74, 96, 101, 88) # Put 10 made up scores into an object called myScores
+rescale(x = myScores) # runs the rescale command on the data stored in the myScores object
+```
+
+This is equivalent to:
+
+```{r rescale2, eval = FALSE}
+rescale(c(101, 130, 65, 87, 119, 102, 74, 96, 101, 88))
+```
+
+Note, we did not need to say `x =` in our function call.
+
+Need Help?
+========================================================
+
+As a reminder, we can find the help file for the `rescale` function by running
+
+```{r help1, eval = FALSE}
+?rescale
+```
+
+or
+
+```{r help2, eval = FALSE}
+help(rescale)
+```
+
+From the help file:
+
+## Usage
+
+`rescale(x, mean = 100, sd = 15,df=TRUE)`
+
+## Arguments
+
+`x` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A matrix or data frame
+
+`mean`&nbsp;&nbsp;&nbsp;&nbsp;	Desired mean of the rescaled scores- may be a vector
+
+`sd`	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Desired standard deviation of the rescaled scores
+
+`df`	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if TRUE, returns a data frame, otherwise a matrix
+
+
+Spot the Difference
+========================================================
+
+```{r spot1, eval = FALSE}
+rescale(c(101, 130, 65, 87, 119, 102, 74, 96, 101, 88))
+```
+
+```{r spot2, eval = FALSE}
+rescale(101, 130, 65, 87, 119, 102, 74, 96, 101, 88)
+```
+
+The c function
+========================================================
+In R, the `c()` function is an important tool for combining multiple data points into a single object.
+
+For example, suppose I wanted to calculate the mean of these three numbers:
+
+12, 58, 481
+
+To figure out how to do this, I can look at the help file for the `mean` function.
+
+```{r mean1}
+?mean
+```
+
+This tells me that I need to enter a value for x, which represents the numbers that I want to average.
+
+If I didn't use the `c()` function, my command would look like this:
+
+```{r mean2}
+mean(12, 58, 481)
+```
+
+`r emo::ji("monocle")`
+
+The c function
+========================================================
+
+Let's open our help file for `mean`
+
+```{r helpmean, eval = FALSE}
+?mean
+```
+
+When we run this command...
+
+```{r mean3, eval = FALSE}
+mean(12, 58, 481)
+```
+
+R interprets it as...
+
+```{r mean4, eval = FALSE}
+mean(x = 12, trim = 58, na.rm = 481)
+```
+
+By default, R will separate your input based on commas (as shown in its help file).
+
+Unless you specifically label the argument (for example, by typing 
+
+`trim = ` 
+
+in front of your to-be-averaged values), R will assume that your input matches what is shown in the help file. 
+
+The c function
+========================================================
+Let's try calculating the mean with `c()` instead.
+
+```{r mean5}
+mean(c(12, 58, 481))
+```
+
+That looks better. For many R functions, all of your data points have to be passed as single objects. `c()` is the simplest way of concatenating multiple data points into a single vector or list.
+
+More complex data structures
+========================================================
+Most of the time, our data are more complex than 3 data points. And those data sets are usually stored in separate files in various formats (e.g., .csv, .sav). Let's learn to read in some data.
+
+SPSS Files
+========================================================
+If your data set is in SPSS format, you can use the `haven` package to read it in to R. First, we need to load the `haven` package. Then, let's read in our SPSS file (.sav extension).
+
+```{r loadHaven}
+p_load(haven)
+```
+
+```{r readSPSS}
+mySPSSdata <- read_sav("fakeData.sav")
+```
+
+*Note: if your SPSS file has missing data codes that you want to import into R, you should add the argument `user_na = TRUE`, like this*:
+
+```{r readSPSS2, eval = FALSE}
+mySPSSdata <- read_sav("fakeData.sav", user_na = TRUE)
+```
+
+Viewing Your Data
+========================================================
+
+If we want to see what our data look like, we have several options. Try each of these and annotate your code to remind yourself of how they differ.
+
+Dump as much as possible to screen
+
+```{r dumpSPSS, eval = FALSE}
+mySPSSdata # or print(mySPSSdata)
+```
+
+`View()`
+
+```{r viewSPSS, eval = FALSE}
+View(mySPSSdata)
+```
+
+`head()`
+
+```{r headSPSS, eval = FALSE}
+head(mySPSSdata)
+```
+
+`glimpse()`
+
+```{r glimpseSPSS, eval = FALSE}
+glimpse(mySPSSdata)
+```
+
+Getting to Know Your Data
+========================================================
+When reading in most data files (e.g., SAV, CSV), the default is to make the objects a `data.frame`, which is the most common way of storing rectangular data where different columns are allowed to store different types of data (e.g., some numeric, some character, some factors).
+
+Once you have your data frame loaded into R, it is important to learn how to view, manipulate, and summarize its contents.
+
+Data structure
+========================================================
+Every `data.frame` has its own internal structure that is essential for you to be aware of. To view the structure of the data, execute the `str()` function.
+
+```{r str, eval = FALSE}
+str(mySPSSdata)
+```
+
+Annotate your syntax with a description of what you just observed after running this command. Make sure you take some time to study the output.
+
+Data structure
+========================================================
+One of the most important pieces of information you can get from learning your data's structure is the name of the variables (columns) in your data object.
+
+Note how each column is prefixed with a dollar sign. If we wanted to examine one specific variable (column) of the data set, we could ask for only that variable to be printed to our screen:
+
+```{r dollar, eval = FALSE}
+mySPSSdata$AGE
+```
+
+This shows the contents of the `AGE` variable in my data set. If I only wanted to see the beginning of that column (first 6 rows by default), I could ask R to show me the header with the `head()` function. Similarly, the `tail()` function shows me the last 6 rows in that column.
+
+```{r head1}
+head(mySPSSdata$AGE)
+```
+
+```{r tail1}
+tail(mySPSSdata$AGE)
+```
+
+The `head()` and `tail()` functions can be applied to entire data frames, too. Try calling `head()` and `tail()` on the `mySPSSdata` object.
+
+*Skills practice: Try asking `R` to show you the last 10 rows of the `mySPSSdata` object instead of the default of 6 rows.*
+
+Column names
+========================================================
+The easiest way to see the name of every column in your data set is to ask for its `names()`.
+
+```{r names, eval = FALSE}
+names(mySPSSdata)
+```
+
+The same thing could be achieved with the `colnames` function.
+
+```{r colnames, eval = FALSE}
+colnames(mySPSSdata)
+```
+
+As a general rule, there are usually multiple ways to achieve the same goal in R.
+
+Descriptive Statistics
+========================================================
+The `psych` package does a great job providing descriptive statistics. Let's look at descriptives for our entire data set using the `describe()` function. 
+
+*Technical detail: sometimes different packages have functions with the same name. For example, the `Hmisc` and `psych` packages both have a function called `describe()`. To explicitly tell R to use the `describe()` function from the `psych` package, we prepend our function call with `psych::`.*
+
+```{r describe, eval = FALSE}
+psych::describe(mySPSSdata)
+```
+
+Note that we haven't actually loaded the `psych` package yet. Prepending our function call with `psych::` allowed us to run that function even though the package isn't loaded. Let's load that package now.
+
+```{r loadPsych}
+p_load(psych)
+```
+
+Descriptive Statistics
+========================================================
+The `psych` package also allows us to view descriptives by group. Let's look at the same descriptives, but broken down by diagnosis (`DX`) using the `describeBy` function.
+
+```{r describeBy, eval = FALSE}
+describeBy(mySPSSdata, mySPSSdata$DX)
+```
+
+Histograms
+========================================================
+In addition to descriptives, we may also want to visualize our data. One of R's greatest features is its plotting capabilities, which is an entire workshop in and of itself. For now, we'll stick with some simple plots.
+
+```{r hist, fig.keep='all'}
+hist(mySPSSdata$AGE)
+```
+
+Scatterplots
+========================================================
+Scatterplots are as simple as specifying what you want on the x and y axes.
+
+```{r scatterplots, fig.keep='all'}
+plot(x = mySPSSdata$AGE, y = mySPSSdata$MMSE)
+```
+
+Plot customization
+========================================================
+```{r prettyScatterplots, fig.keep='all'}
+plot(x = mySPSSdata$AGE, y = mySPSSdata$MMSE, xlab = "Age (years)", ylab = "MMSE Score", 
+     main = "MMSE Scores by Age")
+```
+
+Frequencies
+========================================================
+You'll notice that the `describe()` and `describeBy()` functions treated categorical variables as numeric, leading to some nonsensical values, like the mean of racial category (`PTRACCAT`). Instead, we can summarize categorical data as frequencies using the `table()` command.
+
+```{r table}
+table(mySPSSdata$PTRACCAT)
+```
+
+Proportions
+========================================================
+
+If you want to see **prop**ortions instead of or in addition to frequencies, you can use the `prop.table()` function.
+
+```{r incorrectUsage, eval = FALSE}
+prop.table(mySPSSdata$PTRACCAT)
+```
+
+<!-- https://emoji.muan.co/# -->
+
+`r emo::ji("confused")`
+
+Problems
+========================================================
+
+However, as you can see here, we run into some problems. This weird output gives us a good excuse to delve a little deeper into the nuances of coding in R.
+
+Whereas `table()` simply required us to specify the column of data we wanted to use to calculate frequencies, `prop.table` doesn't expect the raw data as its input, it expects the *table* we just created as the input.
+
+So, how do we go about telling `prop.table` to work its magic on the results that are generated by `table`?
+
+Piping
+========================================================
+
+Piping provides a way to daisy-chain commands together; this is especially useful when you only care about the input and the output, not the intermediate steps.
+
+## magrittr
+
+Piping is done using a special symbol (a "pipe") from the `magrittr` package. `magrittr` is automatically loaded when you load the `tidyverse` package, but we can also load it directly as follows:
+
+```{r libmag}
+p_load(magrittr)
+```
+
+The `magrittr` pipe looks like this: 
+
+```{r pipe, eval = FALSE}
+%>%
+```
+
+It can be typed manually, or by pressing `control` + `shift` + `M`.
+
+Piping
+========================================================
+
+Here's how it could be used to solve our problem:
+
+```{r pipe2, eval = FALSE}
+mySPSSdata$PTRACCAT %>%  # Start with the raw data of interest and pipe it forward
+  table() %>%  # Take what was piped, calculate frequencies, and then pipe THOSE forward
+  prop.table() # Take what was piped, use it to calculate proportions, and then end
+```
+
+The above code would print your data to the screen. If you wanted to save it as a new object, you could write:
+
+```{r pipe3, eval = FALSE}
+prop_race <- mySPSSdata$PTRACCAT %>%  # Start with the raw data of interest and pipe it forward
+  table() %>%  # Take what was piped, calculate frequencies, and then pipe THOSE forward
+  prop.table() # Take what was piped, use it to calculate proportions, and then save as prop_race
+```
+
+Or, if you want to get silly...
+
+```{r pipe4, eval = FALSE}
+mySPSSdata$PTRACCAT %>%  # Start with the raw data of interest and pipe it forward
+  table() %>%  # Take what was piped, calculate frequencies, and then pipe THOSE forward
+  prop.table() -> prop_race # Take what was piped, use it to calculate proportions, and then save as prop_race
+```
+
+Piped Workflows
+========================================================
+
+```{r pipedwf, eval = TRUE}
+wrangled_data <- mySPSSdata %>%
+  select(ID, DX, AGE, PTGENDER, PTEDUCAT, TAU, ABETA, MOCA, Hippocampus, WholeBrain, TRABSCOR) %>%
+  filter(between(TRABSCOR, 0, 300))
+wrangled_data
+```
+
+Data Mutations
+========================================================
+
+```{r mutate, eval = TRUE}
+mutated_data <- wrangled_data %>%
+  mutate(tau_to_abeta = TAU/ABETA,
+         cog_normal = case_when(DX == 1 ~ 1,
+                                        TRUE ~ 0))
+mutated_data
+```
+
+Data Summaries
+========================================================
+
+## Ungrouped
+
+```{r sum1}
+mutated_data %>%
+  summarise(mean_age = mean(AGE),
+            sd_age = sd(AGE),
+            mean_edu = mean(PTEDUCAT),
+            sd_edu = sd(PTEDUCAT),
+            mean_tmtb = mean(TRABSCOR),
+            sd_tmtb = sd(TRABSCOR),
+            n = n())
+```
+
+## Grouped
+
+```{r sum2}
+mutated_data %>%
+  group_by(cog_normal) %>%
+  summarise(mean_age = mean(AGE),
+            sd_age = sd(AGE),
+            mean_edu = mean(PTEDUCAT),
+            sd_edu = sd(PTEDUCAT),
+            mean_tmb = mean(TRABSCOR),
+            sd_tmtb = sd(TRABSCOR),
+            n = n()) %>%
+  ungroup()
+```
+
+Your Task
+========================================================
+
+Create a new object called `wf_dat`, derived from `mySPSSdata`, that meets the following criteria:
+
+1. Contains the following columns:
+    - ID
+    - DX
+    - AGE
+    - PTEDUCAT
+    - WholeBrain
+    - LDELTOTAL
+    - TRABSCOR
+2. Contains the following cases (rows):
+    - Trails B (`TRABSCOR`) values greater than 0 and less than 300
+    - Diagnosis (`DX`) of 1 ("CN") or 2 ("MCI"), but not 3 ("Dementia")
+    - Age (`AGE`) greater than 60
+    
+    
+Analyzing Your Data
+========================================================
+
+```{r wf_dat}
+wf_dat <- mySPSSdata %>%
+  select(ID, DX, AGE, PTEDUCAT, WholeBrain, LDELTOTAL, TRABSCOR) %>%
+  filter(between(TRABSCOR, 0, 300),
+         DX %in% c(1, 2),
+         AGE > 60)
+```
+
+Let's say you want to perform a linear regression using your new data (`wf_dat`)
+
+- DV:
+    - LDELTOTAL
+
+- IVs:
+    - AGE
+    - PTEDUCAT
+    - WholeBrain
+    - PTEDUCAT x WholeBrain
+
+```{r lm}
+linear_m1 <- lm(LDELTOTAL ~ AGE + PTEDUCAT*WholeBrain, data = wf_dat)
+summary(linear_m1)
+```
+
+Summarizing Results
+========================================================
+
+```{r lmout}
+summary(linear_m1)
+```
+
+Handling Results
+========================================================
+
+## Making Predictions
+
+```{r pred}
+wf_dat <- wf_dat %>%
+  mutate(pred_lmd = predict(linear_m1),
+         Diagnosis = factor(DX, levels = 1:2, labels = c("CN", "MCI")))
+```
+
+## Plotting
+
+```{r plot}
+p_load(ggplot2)
+```
+
+```{r plot2}
+wf_dat %>%
+  ggplot(aes(x = pred_lmd, y = LDELTOTAL, colour = Diagnosis)) + # Specifies main elements of plot
+  geom_point() +  # Adds data points
+  geom_smooth(method = "lm") + # Adds a linear (method = "lm") trend line for each group
+  xlab("Predicted LM-D Score") + # Gives the x-axis a custom label
+  ylab("LM-D score") + # Gives the y-axis a custom label
+  ggtitle("No Interaction Effect of Whole Brain Volume x Education on LM-D scores") # Gives the plot a title
+```
+
+Conclusion
+========================================================
+
+*Be sure to save your R Script file!*
+
+## Continued learning and problem-solving
+
+Although there are numerous books available (many through the library) for learning R, the best resources are the R help files and good Google searches. 
+
+Stack Exchange and Stack Overflow are probably the best resources on the web for getting R help.
+
+- **Stack Overflow** ([https://stackoverflow.com/questions/tagged/r](https://stackoverflow.com/questions/tagged/r)) deals with questions about R programming, whereas 
+- **Stack Exchange** ([https://stats.stackexchange.com/questions/tagged/r](https://stats.stackexchange.com/questions/tagged/r)) is more for statistical questions (often asked and answered using R).
+
+## R Cheat Sheets
+
+https://www.rstudio.com/resources/cheatsheets/
+
+I have written a package called `cheatR` that makes it easy to view these cheat sheets in your RStudio Viewer.
+
+```{r cheatr, eval = FALSE}
+if (!requireNamespace("remotes")) {
+  install.packages("remotes")
+}
+remotes::install_github("begavett/cheatR")
+```
+
+https://github.com/begavett/cheatR
+
+## Wrapping Up
+
+Any questions? Shoot me an email.
+
+brandon.gavett@uwa.edu.au
+
+Files from this workshop will be posted to GitHub: https://github.com/begavett/Rbasics
+
+The video recording of this workshop will be available on Teams.
